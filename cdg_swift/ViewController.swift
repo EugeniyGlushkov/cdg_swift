@@ -17,7 +17,7 @@ class ViewController: UITableViewController {
         service.add(text: "third")
         service.add(text: "fourth")
         super.viewDidLoad()
-        tableView.register(UINib(nibName: "TaskTableViewCell", bundle: nil), forCellReuseIdentifier: "TaskTableViewCell")
+        tableView.registerNib(with: TaskTableViewCell.self)
         
         tableView.tableFooterView = UIView()
     }
@@ -27,9 +27,35 @@ class ViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TaskTableViewCell") as? TaskTableViewCell
-        cell?.topLabel.text = service.get(byIndex: indexPath.row).text
-        return cell ?? UITableViewCell()
+        let cell = tableView.dequeueReusableCell(with: TaskTableViewCell.self)
+        cell.topLabel.text = service.get(byIndex: indexPath.row).text
+        return cell
     }
 }
 
+protocol NameDiscribable {
+    var typeName: String { get }
+    static var typeName: String { get }
+}
+
+extension NameDiscribable {
+    var typeName: String {
+        return String(describing: type(of: self))
+    }
+    
+    static var typeName: String {
+        return String(describing: self)
+    }
+}
+
+extension NSObject: NameDiscribable {}
+
+extension UITableView {
+    func registerNib(with type: NameDiscribable.Type) {
+        self.register(UINib(nibName: type.typeName, bundle: nil), forCellReuseIdentifier: type.typeName)
+    }
+    
+    func dequeueReusableCell<T: NameDiscribable> (with type: T.Type) -> T {
+        return self.dequeueReusableCell(withIdentifier: type.typeName) as! T
+    }
+}
