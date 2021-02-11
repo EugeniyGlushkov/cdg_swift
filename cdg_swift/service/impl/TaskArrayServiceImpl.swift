@@ -1,5 +1,5 @@
 //
-//  TaskService.swift
+//  TaskArrayServiceImpl.swift
 //  cdg_swift
 //
 //  Created by evgen on 11.02.2021.
@@ -7,15 +7,21 @@
 
 import Foundation
 
-class TaskService {
+class TaskArrayServiceImpl: TaskService {
     private init() {}
     
-    static let instance = TaskService()
+    private static let instance = TaskArrayServiceImpl()
     
-    var tasks: [Task] = []
+    static func getInstance() -> TaskArrayServiceImpl {
+        return instance
+    }
     
-    func add(text: String) {
-        tasks.append(Task(id: getNewId(), text: text))
+    private var tasks: [Task] = []
+    
+    func add(text: String) -> Task {
+        let newTask = Task(id: getNewId(), text: text)
+        tasks.append(newTask)
+        return newTask
     }
     
     func remove(byIndex index: Int) {

@@ -9,9 +9,8 @@ import UIKit
 
 class ViewController: UITableViewController {
     
-    //let items: [String] = ["first", "second", "third"]
-    let service = TaskService.instance
-
+    let service: TaskService = TaskArrayServiceImpl.getInstance()
+        
     override func viewDidLoad() {
         service.add(text: "first")
         service.add(text: "second")
@@ -19,6 +18,8 @@ class ViewController: UITableViewController {
         service.add(text: "fourth")
         super.viewDidLoad()
         tableView.register(UINib(nibName: "TaskTableViewCell", bundle: nil), forCellReuseIdentifier: "TaskTableViewCell")
+        
+        tableView.tableFooterView = UIView()
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
