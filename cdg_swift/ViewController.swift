@@ -7,13 +7,28 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UITableViewController {
+    
+    //let items: [String] = ["first", "second", "third"]
+    let service = TaskService.instance
 
     override func viewDidLoad() {
+        service.add(text: "first")
+        service.add(text: "second")
+        service.add(text: "third")
+        service.add(text: "fourth")
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        tableView.register(UINib(nibName: "TaskTableViewCell", bundle: nil), forCellReuseIdentifier: "TaskTableViewCell")
     }
-
-
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return service.getCount()
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TaskTableViewCell") as? TaskTableViewCell
+        cell?.topLabel.text = service.get(byIndex: indexPath.row).text
+        return cell ?? UITableViewCell()
+    }
 }
 
