@@ -7,29 +7,46 @@
 
 import UIKit
 
-class ViewController: UITableViewController {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let service: TaskService = TaskArrayServiceImpl.getInstance()
         
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
-        service.add(text: "first")
-        service.add(text: "second")
-        service.add(text: "third")
-        service.add(text: "fourth")
         super.viewDidLoad()
-        tableView.registerNib(with: TaskTableViewCell.self)
         
+//        service.add(text: "first")
+//        service.add(text: "second")
+//        service.add(text: "third")
+//        service.add(text: "fourth")
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.registerNib(with: TaskTableViewCell.self)
         tableView.tableFooterView = UIView()
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return service.getCount()
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(with: TaskTableViewCell.self)
         cell.topLabel.text = service.get(byIndex: indexPath.row).text
         return cell
+    }
+    
+    @IBAction func addNewTaskButtonTouched(_ sender: Any) {
+        let alertVC = UIAlertController(title: "New task", message: nil, preferredStyle: .alert)
+        alertVC.addTextField{ (textField) in
+        }
+        alertVC.addAction(UIAlertAction(title: "Add", style: .default, handler: { (_) in
+            guard let text: String = alertVC.textFields?.first?.text else { return }
+            self.service.add(text: text)
+            self.tableView.reloadData()
+        }))
+        present(alertVC, animated: true)
     }
 }
 
