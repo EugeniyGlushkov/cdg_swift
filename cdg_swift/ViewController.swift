@@ -7,45 +7,45 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    let service: TaskService = TaskArrayServiceImpl.getInstance()
+class ViewController: UIViewController {
+    static let NEW_TASK_BUTTON_TITLE = "New task"
+    static let ADD_BUTTON_TITLE = "ADD"
         
     @IBOutlet weak var tableView: UITableView!
+    
+    let delegate = DelegateTableView(service: TaskArrayServiceImpl.getInstance())
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        service.add(text: "first")
-//        service.add(text: "second")
-//        service.add(text: "third")
-//        service.add(text: "fourth")
-        
-        tableView.delegate = self
-        tableView.dataSource = self
+        tableView.delegate = delegate
+        tableView.dataSource = delegate
         tableView.registerNib(with: TaskTableViewCell.self)
         tableView.tableFooterView = UIView()
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return service.getCount()
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(with: TaskTableViewCell.self)
-        cell.topLabel.text = service.get(byIndex: indexPath.row).text
-        return cell
-    }
-    
     @IBAction func addNewTaskButtonTouched(_ sender: Any) {
-        let alertVC = UIAlertController(title: "New task", message: nil, preferredStyle: .alert)
-        alertVC.addTextField{ (textField) in
-        }
-        alertVC.addAction(UIAlertAction(title: "Add", style: .default, handler: { (_) in
+        let alertVC = UIAlertController(title: ViewController.NEW_TASK_BUTTON_TITLE, message: nil, preferredStyle: .alert)
+        
+        let addAction = UIAlertAction(title: ViewController.ADD_BUTTON_TITLE, style: .default, handler: { (_) in
             guard let text: String = alertVC.textFields?.first?.text else { return }
-            self.service.add(text: text)
+            self.delegate.getService().add(text: text)
             self.tableView.reloadData()
-        }))
+        })
+        
+        alertVC.addTextField(configurationHandler: {(textField: UITextField!) in
+            NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification,
+                                                   object: textField,
+                                                   queue: OperationQueue.main,
+                                                   using: {_ in
+                                                    let textCount = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines).count ?? 0
+                                                    addAction.isEnabled = textCount > 3
+                                                   })
+        })
+        
+        addAction.isEnabled = false
+        
+        alertVC.addAction(addAction)
         present(alertVC, animated: true)
     }
 }
@@ -74,5 +74,28 @@ extension UITableView {
     
     func dequeueReusableCell<T: NameDiscribable> (with type: T.Type) -> T {
         return self.dequeueReusableCell(withIdentifier: type.typeName) as! T
+    }
+}
+
+class DelegateTableView: NSObject, UITableViewDelegate, UITableViewDataSource {
+    
+    private let service: TaskService
+    
+    init(service: TaskService) {
+        self.service = service
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return service.getCount()
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(with: TaskTableViewCell.self)
+        cell.topLabel.text = service.get(byIndex: indexPath.row).text
+        return cell
+    }
+    
+    func getService() -> TaskService {
+        return service
     }
 }
