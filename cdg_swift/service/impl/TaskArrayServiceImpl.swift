@@ -21,6 +21,7 @@ class TaskArrayServiceImpl: TaskService {
     func add(text: String) -> Task {
         let newTask = Task(id: getNewId(), text: text)
         tasks.append(newTask)
+        print("id: \(newTask.id), text: \(newTask.text)")
         return newTask
     }
     

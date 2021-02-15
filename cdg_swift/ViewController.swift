@@ -92,10 +92,43 @@ class DelegateTableView: NSObject, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(with: TaskTableViewCell.self)
         cell.topLabel.text = service.get(byIndex: indexPath.row).text
+        addSwipeHandles(cell: cell)
         return cell
+    }
+    
+    private func addSwipeHandles(cell: UITableViewCell) {
+        cell.isUserInteractionEnabled = true
+        addLeftSwipeHandle(cell: cell)
+        addRightSwipeHandle(cell: cell)
+    }
+    
+    private func addLeftSwipeHandle(cell: UITableViewCell) {
+        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(self.handleLeftSwipe(_:)))
+        swipe.direction = .left
+        cell.addGestureRecognizer(swipe)
+    }
+    
+    private func addRightSwipeHandle(cell: UITableViewCell) {
+        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(self.handleRightSwipe(_:)))
+        swipe.direction = .right
+        cell.addGestureRecognizer(swipe)
+    }
+    
+    @objc private func handleLeftSwipe(_ sender: UISwipeGestureRecognizer) {
+        print("Left swipe!")
+    }
+    
+    @objc private func handleRightSwipe(_ sender: UISwipeGestureRecognizer) {
+        print("Right swipe!")
     }
     
     func getService() -> TaskService {
         return service
+    }
+}
+
+extension ViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }
