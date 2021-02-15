@@ -10,6 +10,16 @@ import UIKit
 class TaskTableViewCell: UITableViewCell {
 
     @IBOutlet weak var topLabel: UILabel!
+    @IBOutlet weak var deleteTaskButton: UIButton!
+    
+    @IBAction func deleteTaskButtonTouched(_ sender: Any) {
+        guard let handler = deleteTaskButtonTouchedHandler else {
+            return
+        }
+        handler()
+    }
+    
+    var deleteTaskButtonTouchedHandler: (() -> ())?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,4 +32,37 @@ class TaskTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func addSwipeHandles() {
+        isUserInteractionEnabled = true
+        addLeftSwipeHandle()
+        addRightSwipeHandle()
+    }
+    
+    private func addLeftSwipeHandle() {
+        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(self.handleLeftSwipe(_:)))
+        swipe.direction = .left
+        addGestureRecognizer(swipe)
+    }
+    
+    private func addRightSwipeHandle() {
+        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(self.handleRightSwipe(_:)))
+        swipe.direction = .right
+        addGestureRecognizer(swipe)
+    }
+    
+    @objc private func handleLeftSwipe(_ sender: UISwipeGestureRecognizer) {
+        print("Left swipe!")
+        deleteTaskButton.isHidden = !deleteTaskButton.isHidden
+    }
+    
+    @objc private func handleRightSwipe(_ sender: UISwipeGestureRecognizer) {
+        print("Right swipe!")
+        deleteTaskButton.isHidden = !deleteTaskButton.isHidden
+    }
+}
+
+extension UITableViewCell: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
 }

@@ -26,6 +26,7 @@ class TaskArrayServiceImpl: TaskService {
     }
     
     func remove(byIndex index: Int) {
+        print("Remove id: \(index)")
         tasks.remove(at: index)
     }
     

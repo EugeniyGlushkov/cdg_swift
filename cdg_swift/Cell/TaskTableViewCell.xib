@@ -22,21 +22,38 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ebC-8G-j9N">
+                        <rect key="frame" x="254" y="12" width="50" height="50.5"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="nuK-Cc-OUO"/>
+                            <constraint firstAttribute="width" constant="50" id="zl0-3p-Moq"/>
+                        </constraints>
+                        <state key="normal" backgroundImage="trash" catalog="system"/>
+                        <connections>
+                            <action selector="deleteTaskButtonTouched:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ozC-Ak-Xgs"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="X2M-K7-RsS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="20" id="2mY-XI-suu"/>
                     <constraint firstAttribute="trailingMargin" secondItem="X2M-K7-RsS" secondAttribute="trailing" constant="20" id="8K9-x0-mbV"/>
                     <constraint firstItem="X2M-K7-RsS" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="FD9-x1-MVK"/>
                     <constraint firstAttribute="bottomMargin" secondItem="X2M-K7-RsS" secondAttribute="bottom" constant="20" id="Oud-q6-lMM"/>
+                    <constraint firstItem="ebC-8G-j9N" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="dEd-WK-6FQ"/>
+                    <constraint firstAttribute="trailing" secondItem="ebC-8G-j9N" secondAttribute="trailing" constant="16" id="kpM-KH-hfl"/>
                     <constraint firstItem="X2M-K7-RsS" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="20" id="lbZ-lp-q69"/>
                     <constraint firstItem="X2M-K7-RsS" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="pbS-pM-OVw"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="deleteTaskButton" destination="ebC-8G-j9N" id="lf2-Iw-Fxv"/>
                 <outlet property="topLabel" destination="X2M-K7-RsS" id="deB-uG-gAL"/>
             </connections>
-            <point key="canvasLocation" x="131.8840579710145" y="144.97767857142856"/>
+            <point key="canvasLocation" x="131.8840579710145" y="144.30803571428569"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="trash" catalog="system" width="121" height="128"/>
+    </resources>
 </document>
