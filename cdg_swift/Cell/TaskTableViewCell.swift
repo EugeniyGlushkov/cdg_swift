@@ -20,6 +20,7 @@ class TaskTableViewCell: UITableViewCell {
     }
     
     var deleteTaskButtonTouchedHandler: (() -> ())?
+    var cellTappedHandler: (() -> ())?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -58,6 +59,20 @@ class TaskTableViewCell: UITableViewCell {
     @objc private func handleRightSwipe(_ sender: UISwipeGestureRecognizer) {
         print("Right swipe!")
         deleteTaskButton.isHidden = !deleteTaskButton.isHidden
+    }
+    
+    func addTapHandle() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        addGestureRecognizer(tap)
+    }
+    
+    @objc private func handleTap(_ sender: UITapGestureRecognizer) {
+        print("Tap!!!")
+        
+        guard let handler = cellTappedHandler else {
+            return
+        }
+        handler()
     }
 }
 

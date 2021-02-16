@@ -31,6 +31,7 @@ class TaskArrayServiceImpl: TaskService {
     }
     
     func update(byIndex index: Int, newText: String) {
+        print("Update index: \(index), text: \"\(newText)\"")
         guard index < tasks.count else { return }
         
         tasks[index].text = newText

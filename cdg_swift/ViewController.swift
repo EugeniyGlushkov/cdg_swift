@@ -10,6 +10,8 @@ import UIKit
 class ViewController: UIViewController {
     static let NEW_TASK_BUTTON_TITLE = "New task"
     static let ADD_BUTTON_TITLE = "ADD"
+    static let UPDATE_TASK_TITLE = "Update task"
+    static let UPDATE_BUTTON_TITLE = "UPDATE"
         
     @IBOutlet weak var tableView: UITableView!
     
@@ -93,6 +95,7 @@ class DelegateTableView: NSObject, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(with: TaskTableViewCell.self)
         cell.topLabel.text = service.get(byIndex: indexPath.row).text
+        cell.deleteTaskButton.isHidden = true
         cell.deleteTaskButtonTouchedHandler = {
             self.service.remove(byIndex: indexPath.row)
             
@@ -102,7 +105,38 @@ class DelegateTableView: NSObject, UITableViewDelegate, UITableViewDataSource {
             
             vc.tableView.reloadData()
         }
+        
+        cell.cellTappedHandler = {
+            let alertVC = UIAlertController(title: ViewController.UPDATE_TASK_TITLE, message: nil, preferredStyle: .alert)
+            
+            let updateAction = UIAlertAction(title: ViewController.UPDATE_BUTTON_TITLE, style: .default, handler: { (_) in
+                guard let text: String = alertVC.textFields?.first?.text else { return }
+                self.service.update(byIndex: indexPath.row, newText: text)
+                
+                guard let vc = self.viewController else {
+                    return
+                }
+                
+                vc.tableView.reloadData()
+            })
+            
+            alertVC.addTextField(configurationHandler: {(textField: UITextField!) in
+                textField.text = cell.topLabel.text
+                NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification,
+                                                       object: textField,
+                                                       queue: OperationQueue.main,
+                                                       using: {_ in
+                                                        let textCount = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines).count ?? 0
+                                                        updateAction.isEnabled = textCount > 3
+                                                       })
+            })
+            
+            alertVC.addAction(updateAction)
+            self.viewController!.present(alertVC, animated: true)
+        }
+        
         cell.addSwipeHandles()
+        cell.addTapHandle()
         return cell
     }
     
