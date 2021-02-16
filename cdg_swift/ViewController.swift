@@ -94,6 +94,11 @@ class DelegateTableView: NSObject, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(with: TaskTableViewCell.self)
+        
+        if indexPath.row.isOdd {
+            cell.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1)
+        }
+        
         cell.topLabel.text = service.get(byIndex: indexPath.row).text
         cell.deleteTaskButton.isHidden = true
         cell.deleteTaskButtonTouchedHandler = {
@@ -142,5 +147,11 @@ class DelegateTableView: NSObject, UITableViewDelegate, UITableViewDataSource {
     
     func getService() -> TaskService {
         return service
+    }
+}
+
+extension Int {
+    var isOdd: Bool {
+        return self.isMultiple(of: 2)
     }
 }
