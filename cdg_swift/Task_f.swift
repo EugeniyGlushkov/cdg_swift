@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Task {
+struct Task_ {
     let id: Int
     var text: String
 }
