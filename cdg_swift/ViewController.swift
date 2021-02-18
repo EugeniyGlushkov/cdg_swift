@@ -16,9 +16,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     let delegate = DelegateTableView(service: TaskServiceImpl(withRepository: ArrayTaskRepositoryImpl.getInstance()))
+    var tasks: [Task] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tasks = delegate.getService().getAll()
         delegate.viewController = self
         tableView.delegate = delegate
         tableView.dataSource = delegate
@@ -32,7 +34,7 @@ class ViewController: UIViewController {
         let addAction = UIAlertAction(title: ViewController.ADD_BUTTON_TITLE, style: .default, handler: { (_) in
             guard let text: String = alertVC.textFields?.first?.text else { return }
             self.delegate.getService().add(text: text)
-            self.tableView.reloadData()
+            self.updateTasksAndReloadTable()
         })
         
         alertVC.addTextField(configurationHandler: {(textField: UITextField!) in
@@ -49,6 +51,11 @@ class ViewController: UIViewController {
         
         alertVC.addAction(addAction)
         present(alertVC, animated: true)
+    }
+    
+    func updateTasksAndReloadTable(){
+        tasks = delegate.getService().getAll()
+        tableView.reloadData()
     }
 }
 
@@ -99,16 +106,17 @@ class DelegateTableView: NSObject, UITableViewDelegate, UITableViewDataSource {
             cell.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1)
         }
         
-        cell.topLabel.text = service.get(byIndex: indexPath.row).text
+        let currentTask = viewController!.tasks[indexPath.row]
+        cell.topLabel.text = currentTask.text
         cell.deleteTaskButton.isHidden = true
         cell.deleteTaskButtonTouchedHandler = {
-            self.service.remove(byIndex: indexPath.row)
+            self.service.remove(byId: Int(currentTask.id))
             
             guard let vc = self.viewController else {
                 return
             }
             
-            vc.tableView.reloadData()
+            vc.updateTasksAndReloadTable()
         }
         
         cell.cellTappedHandler = {
@@ -116,13 +124,13 @@ class DelegateTableView: NSObject, UITableViewDelegate, UITableViewDataSource {
             
             let updateAction = UIAlertAction(title: ViewController.UPDATE_BUTTON_TITLE, style: .default, handler: { (_) in
                 guard let text: String = alertVC.textFields?.first?.text else { return }
-                self.service.update(byIndex: indexPath.row, newText: text)
+                self.service.update(byId: Int(currentTask.id), newText: text)
                 
                 guard let vc = self.viewController else {
                     return
                 }
                 
-                vc.tableView.reloadData()
+                vc.updateTasksAndReloadTable()
             })
             
             alertVC.addTextField(configurationHandler: {(textField: UITextField!) in

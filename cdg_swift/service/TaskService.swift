@@ -8,13 +8,15 @@
 import Foundation
 
 protocol TaskService {
-    func add(text: String) -> Task
+    func add(text: String)
     
-    func remove(byIndex index: Int)
+    func remove(byId id: Int)
     
-    func update(byIndex index: Int, newText: String)
+    func update(byId id: Int, newText: String)
     
-    func get(byIndex index: Int) -> Task
+    func get(byId id: Int) -> Task?
+    
+    func getAll() -> [Task]
     
     func getCount() -> Int
 }

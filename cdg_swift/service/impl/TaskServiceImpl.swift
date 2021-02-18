@@ -8,31 +8,35 @@
 import Foundation
 
 class TaskServiceImpl: TaskService {
+    
     init(withRepository repository: TaskRepository) {
         self.repository = repository
     }
     
     private let repository: TaskRepository
     
-    func add(text: String) -> Task {
+    func add(text: String) {
         print("Add text\(text)")
-        return repository.add(text: text)
+        repository.add(text: text)
     }
     
-    func remove(byIndex index: Int) {
-        print("Remove id: \(index)")
-        repository.remove(byIndex: index)
+    func remove(byId id: Int) {
+        print("Remove id: \(id)")
+        repository.remove(byId: id)
     }
     
-    func update(byIndex index: Int, newText: String) {
-        print("Update index: \(index), text: \"\(newText)\"")
-        guard index < getCount() else { return }
-        repository.update(byIndex: index, newText: newText)
+    func update(byId id: Int, newText: String) {
+        print("Update index: \(id), text: \"\(newText)\"")
+        repository.update(byId: id, newText: newText)
     }
     
-    func get(byIndex index: Int) -> Task {
-        print("Get index: \(index)")
-        return repository.get(byIndex: index)
+    func get(byId id: Int) -> Task? {
+        print("Get index: \(id)")
+        return repository.get(byId: id)
+    }
+    
+    func getAll() -> [Task] {
+        repository.getAll()
     }
     
     func getCount() -> Int {

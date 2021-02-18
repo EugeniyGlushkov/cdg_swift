@@ -6,29 +6,68 @@
 //
 
 import Foundation
+import CoreData
 
 class CoreDataTaskRepositoryImpl: TaskRepository {
-    func add(text: String) -> Task {
-        return Task()
+    private init() {}
+    
+    private var helper = CoreDataHelper()
+    
+    private static let instance = CoreDataTaskRepositoryImpl()
+    
+    public static func getInstance() -> CoreDataTaskRepositoryImpl {
+        return instance
     }
     
-    func remove(byIndex index: Int) {
+    func add(text: String) {
+        guard let newTask = NSEntityDescription.insertNewObject(forEntityName: "Task", into: helper.context) as? Task else {
+            return
+        }
+        
+        newTask.id = Int64(getNewId())
+        newTask.text = text
+        saveContext()
+    }
+    
+    func remove(byId id: Int) {
         
     }
     
-    func update(byIndex index: Int, newText: String) {
+    func update(byId id: Int, newText: String) {
         
     }
     
-    func get(byIndex index: Int) -> Task {
+    func get(byId id: Int) -> Task? {
         return Task()
     }
     
     func getCount() -> Int {
-        return 0
+        return getAll().count
     }
     
     func getAll() -> [Task] {
-        return []
+        let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
+        var tasks: [Task]
+        
+        do {
+            tasks = try helper.context.fetch(fetchRequest)
+        } catch {
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
+        
+        return tasks
+    }
+    
+    private func saveContext() {
+        if helper.context.hasChanges {
+            do {
+                try helper.context.save()
+            } catch {
+                helper.context.rollback()
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+        }
     }
 }

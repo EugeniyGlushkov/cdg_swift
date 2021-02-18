@@ -12,7 +12,7 @@ class ArrayTaskRepositoryImpl: TaskRepository {
     private init() {}
     
     private var repository: [Task] = []
-    private var context: NSManagedObjectContext = { return AppDelegate.persistentContainer.viewContext }()
+    private var helper =  CoreDataHelper()
     
     private static let instance = ArrayTaskRepositoryImpl()
     
@@ -20,31 +20,36 @@ class ArrayTaskRepositoryImpl: TaskRepository {
         return instance
     }
     
-    func add(text: String) -> Task {
-        let newTask = Task(context: context)
+    func add(text: String) {
+        let newTask = Task(context: helper.context)
+        newTask.id = Int64(getNewId())
         newTask.text = text
-        let newId = getNewId()
-        newTask.id = Int64(newId)
         repository.append(newTask)
-        return newTask
     }
     
-    func remove(byIndex index: Int) {
-        repository.remove(at: index)
+    func remove(byId id: Int) {
+        repository = repository.filter{
+            return $0.id != id
+        }
     }
     
-    func update(byIndex index: Int, newText: String) {        
-        repository[index].text = newText
+    func update(byId id: Int, newText: String) {
+        repository.forEach {
+            if $0.id == id {
+                $0.text = newText
+            }
+        }
     }
     
-    func get(byIndex index: Int) -> Task {
-        return repository[index]
+    func get(byId id: Int) -> Task? {
+        let tasks = repository.filter {
+            return $0.id == id
+        }
+        
+        return tasks.isEmpty ? nil : tasks[0]
     }
     
     func getAll() -> [Task] {
-        return repository.map{
-            task in
-            return task
-        }
+        return repository
     }
 }
