@@ -15,7 +15,7 @@ class ViewController: UIViewController {
         
     @IBOutlet weak var tableView: UITableView!
     
-    let delegate = DelegateTableView(service: TaskServiceImpl(withRepository: ArrayTaskRepositoryImpl.getInstance()))
+    let delegate = DelegateTableView(service: TaskServiceImpl(withRepository: CoreDataTaskRepositoryImpl.getInstance()))
     var tasks: [Task] = []
     
     override func viewDidLoad() {

@@ -30,15 +30,48 @@ class CoreDataTaskRepositoryImpl: TaskRepository {
     }
     
     func remove(byId id: Int) {
+        let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "any id = \(id)")
         
+        do {
+            let tasks = try helper.context.fetch(fetchRequest)
+            let taskToDelete = tasks[0]
+            helper.context.delete(taskToDelete)
+            saveContext()
+        } catch {
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
     }
     
     func update(byId id: Int, newText: String) {
+        let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
         
+        guard let taskToUpdate = get(byId: id, fetchRequest: fetchRequest) else {
+            return
+        }
+        
+        taskToUpdate.setValue(newText, forKey: "text")
+        saveContext()
     }
     
     func get(byId id: Int) -> Task? {
-        return Task()
+        let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
+        return get(byId: id, fetchRequest: fetchRequest)
+    }
+    
+    private func get(byId id: Int, fetchRequest: NSFetchRequest<Task>) -> Task? {
+        fetchRequest.predicate = NSPredicate(format: "any id = \(id)")
+        var tasks: [Task]
+        
+        do {
+            tasks = try helper.context.fetch(fetchRequest)
+        } catch {
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
+        
+        return tasks.isEmpty ? nil : tasks[0]
     }
     
     func getCount() -> Int {
