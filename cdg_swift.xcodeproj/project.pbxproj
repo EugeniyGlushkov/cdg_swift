@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C6780B87C6457FEBFAE042E /* UserDefaultsTaskRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C678C02E447ECA6741FCC65 /* UserDefaultsTaskRepository.swift */; };
 		6C0D06F425D5518E008759C4 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0D06F225D5518E008759C4 /* TaskTableViewCell.swift */; };
 		6C0D06F525D5518E008759C4 /* TaskTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C0D06F325D5518E008759C4 /* TaskTableViewCell.xib */; };
 		6C0D06F925D5539C008759C4 /* Task_f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0D06F825D5539C008759C4 /* Task_f.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5C678C02E447ECA6741FCC65 /* UserDefaultsTaskRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsTaskRepository.swift; sourceTree = "<group>"; };
 		6C0D06F225D5518E008759C4 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		6C0D06F325D5518E008759C4 /* TaskTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskTableViewCell.xib; sourceTree = "<group>"; };
 		6C0D06F825D5539C008759C4 /* Task_f.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task_f.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 		6C61779025DBEBC800ACA996 /* repository */ = {
 			isa = PBXGroup;
 			children = (
+				6C7BBDF42608D4F60000A076 /* UserDefaults */,
 				6C61779B25DBEFF900ACA996 /* array */,
 				6C61779525DBEE2600ACA996 /* coreData */,
 				6C61779125DBEC5600ACA996 /* TaskRepository.swift */,
@@ -172,6 +175,14 @@
 				6C61779C25DBF01E00ACA996 /* ArrayTaskRepositoryImpl.swift */,
 			);
 			path = array;
+			sourceTree = "<group>";
+		};
+		6C7BBDF42608D4F60000A076 /* UserDefaults */ = {
+			isa = PBXGroup;
+			children = (
+				5C678C02E447ECA6741FCC65 /* UserDefaultsTaskRepository.swift */,
+			);
+			path = UserDefaults;
 			sourceTree = "<group>";
 		};
 		6CBC3D3F25D5822300A54D88 /* impl */ = {
@@ -268,6 +279,7 @@
 				6C5BD2B925DD44EE00D47716 /* Task+CoreDataProperties.swift in Sources */,
 				6C5BD2B825DD44EE00D47716 /* Task+CoreDataClass.swift in Sources */,
 				6C1034F025D51AB4001A0D6B /* SceneDelegate.swift in Sources */,
+				5C6780B87C6457FEBFAE042E /* UserDefaultsTaskRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

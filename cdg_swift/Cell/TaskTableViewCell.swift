@@ -52,12 +52,10 @@ class TaskTableViewCell: UITableViewCell {
     }
     
     @objc private func handleLeftSwipe(_ sender: UISwipeGestureRecognizer) {
-        print("Left swipe!")
         deleteTaskButton.isHidden = !deleteTaskButton.isHidden
     }
     
     @objc private func handleRightSwipe(_ sender: UISwipeGestureRecognizer) {
-        print("Right swipe!")
         deleteTaskButton.isHidden = !deleteTaskButton.isHidden
     }
     

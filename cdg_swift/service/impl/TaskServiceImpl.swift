@@ -16,22 +16,18 @@ class TaskServiceImpl: TaskService {
     private let repository: TaskRepository
     
     func add(text: String) {
-        print("Add text\(text)")
         repository.add(text: text)
     }
     
     func remove(byId id: Int) {
-        print("Remove id: \(id)")
         repository.remove(byId: id)
     }
     
     func update(byId id: Int, newText: String) {
-        print("Update index: \(id), text: \"\(newText)\"")
         repository.update(byId: id, newText: newText)
     }
     
     func get(byId id: Int) -> Task? {
-        print("Get index: \(id)")
         return repository.get(byId: id)
     }
     
