@@ -14,8 +14,13 @@ class ViewController: UIViewController {
     static let UPDATE_BUTTON_TITLE = "UPDATE"
         
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var addButton: UIButton!{
+        didSet {
+            addButton.layer.cornerRadius = 10
+        }
+    }
     
-    let delegate = DelegateTableView(service: TaskServiceImpl(withRepository: CoreDataTaskRepositoryImpl.getInstance()))
+    let delegate = DelegateTableView(service: TaskServiceImpl(withRepository: UserDefaultsTaskRepository.getInstance()))
     var tasks: [Task] = []
     
     override func viewDidLoad() {

@@ -47,7 +47,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="deleteTaskButton" destination="ebC-8G-j9N" id="lf2-Iw-Fxv"/>
+                <outlet property="deleteTaskButton" destination="ebC-8G-j9N" id="D7i-2D-HTa"/>
                 <outlet property="topLabel" destination="X2M-K7-RsS" id="deB-uG-gAL"/>
             </connections>
             <point key="canvasLocation" x="131.8840579710145" y="144.30803571428569"/>

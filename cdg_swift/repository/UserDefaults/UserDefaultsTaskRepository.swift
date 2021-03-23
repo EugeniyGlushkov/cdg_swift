@@ -46,6 +46,8 @@ class UserDefaultsTaskRepository: TaskRepository {
 
     func add(text: String) {
         let newDataTask = DataTask(id: getNewId(), text: text)
+
+        tasks.append(newDataTask)
     }
 
     func remove(byId id: Int) {

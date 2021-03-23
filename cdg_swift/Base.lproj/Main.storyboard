@@ -16,25 +16,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SGL-XY-v9v">
-                                <rect key="frame" x="314" y="44" width="100" height="60"/>
-                                <color key="backgroundColor" red="0.81366563956120885" green="0.83413485680541866" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SGL-XY-v9v">
+                                <rect key="frame" x="354" y="45" width="60" height="57.5"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="6lT-7r-Z2X"/>
+                                    <constraint firstAttribute="width" constant="60" id="SA2-tZ-aaq"/>
                                     <constraint firstAttribute="height" constant="60" id="W4e-Iw-sco"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                <state key="normal" title="Add task">
+                                <state key="normal" backgroundImage="plus.app" catalog="system">
                                     <color key="titleColor" systemColor="labelColor"/>
                                 </state>
                                 <connections>
                                     <action selector="addNewTaskButtonTouched:" destination="OQx-1z-SfH" eventType="touchUpInside" id="M9k-Nh-k7m"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Wno-TX-lb5">
-                                <rect key="frame" x="0.0" y="104" width="414" height="758"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Wno-TX-lb5">
+                                <rect key="frame" x="0.0" y="109" width="414" height="753"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Todo list" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CoQ-tb-vAd">
+                                <rect key="frame" x="174.5" y="64" width="65" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="hxF-oB-aLp"/>
+                                    <constraint firstAttribute="width" constant="65" id="sAh-cr-zli"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fkN-uN-a3b"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -42,21 +50,25 @@
                             <constraint firstItem="Wno-TX-lb5" firstAttribute="leading" secondItem="fkN-uN-a3b" secondAttribute="leading" id="8Zo-vf-taX"/>
                             <constraint firstItem="fkN-uN-a3b" firstAttribute="bottom" secondItem="Wno-TX-lb5" secondAttribute="bottom" id="FnA-Sx-bVb"/>
                             <constraint firstItem="fkN-uN-a3b" firstAttribute="trailing" secondItem="Wno-TX-lb5" secondAttribute="trailing" id="a2c-JR-zvi"/>
+                            <constraint firstItem="CoQ-tb-vAd" firstAttribute="centerX" secondItem="fkN-uN-a3b" secondAttribute="centerX" id="dNA-qg-lot"/>
                             <constraint firstItem="fkN-uN-a3b" firstAttribute="trailing" secondItem="SGL-XY-v9v" secondAttribute="trailing" id="ie9-eQ-C2B"/>
-                            <constraint firstItem="Wno-TX-lb5" firstAttribute="top" secondItem="SGL-XY-v9v" secondAttribute="bottom" id="k8j-yw-e4y"/>
+                            <constraint firstItem="CoQ-tb-vAd" firstAttribute="top" secondItem="fkN-uN-a3b" secondAttribute="top" constant="20" id="vUM-IQ-q8N"/>
                             <constraint firstItem="SGL-XY-v9v" firstAttribute="top" secondItem="fkN-uN-a3b" secondAttribute="top" id="ye9-Uz-ufX"/>
+                            <constraint firstItem="Wno-TX-lb5" firstAttribute="top" secondItem="SGL-XY-v9v" secondAttribute="bottom" constant="5" id="ynh-RG-2Li"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="addButton" destination="SGL-XY-v9v" id="38Z-PK-xVa"/>
                         <outlet property="tableView" destination="Wno-TX-lb5" id="4Ot-54-bhS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Xz-9F-Aj9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-751" y="92"/>
+            <point key="canvasLocation" x="-752.17391304347836" y="91.741071428571431"/>
         </scene>
     </scenes>
     <resources>
+        <image name="plus.app" catalog="system" width="128" height="114"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
