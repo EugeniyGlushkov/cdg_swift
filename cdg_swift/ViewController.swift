@@ -20,7 +20,7 @@ class ViewController: UIViewController {
         }
     }
     
-    let delegate = DelegateTableView(service: TaskServiceImpl(withRepository: UserDefaultsTaskRepository.getInstance()))
+    let delegate = DelegateTableView(service: TaskServiceImpl(withRepository: CoreDataTaskRepositoryImpl.getInstance()))
     var tasks: [Task] = []
     
     override func viewDidLoad() {

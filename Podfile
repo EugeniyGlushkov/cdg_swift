@@ -5,6 +5,6 @@ target 'cdg_swift' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-  # Pods for cdg_swift
+  pod 'Locksmith'
 
 end
