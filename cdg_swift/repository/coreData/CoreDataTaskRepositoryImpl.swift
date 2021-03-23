@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class CoreDataTaskRepositoryImpl: TaskRepository {
+class CoreDataTaskRepositoryImpl: TaskRepositoryProtocol {
     private init() {}
     
     private var helper = CoreDataHelper()

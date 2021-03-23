@@ -7,13 +7,13 @@
 
 import Foundation
 
-class TaskServiceImpl: TaskService {
+class TaskServiceImpl: TaskServiceProtocol {
     
-    init(withRepository repository: TaskRepository) {
+    init(withRepository repository: TaskRepositoryProtocol) {
         self.repository = repository
     }
     
-    private let repository: TaskRepository
+    private let repository: TaskRepositoryProtocol
     
     func add(text: String) {
         repository.add(text: text)

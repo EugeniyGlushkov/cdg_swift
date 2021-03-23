@@ -93,10 +93,10 @@ extension UITableView {
 
 class DelegateTableView: NSObject, UITableViewDelegate, UITableViewDataSource {
     
-    private let service: TaskService
+    private let service: TaskServiceProtocol
     var viewController: ViewController?
     
-    init(service: TaskService) {
+    init(service: TaskServiceProtocol) {
         self.service = service
     }
     
@@ -158,7 +158,7 @@ class DelegateTableView: NSObject, UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    func getService() -> TaskService {
+    func getService() -> TaskServiceProtocol {
         return service
     }
 }

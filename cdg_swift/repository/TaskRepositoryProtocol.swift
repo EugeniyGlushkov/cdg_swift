@@ -1,5 +1,5 @@
 //
-//  TaskRepository.swift
+//  TaskRepositoryProtocol.swift
 //  cdg_swift
 //
 //  Created by evgen on 16.02.2021.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol TaskRepository {
+protocol TaskRepositoryProtocol {
     func add(text: String)
     
     func remove(byId id: Int)
@@ -19,7 +19,7 @@ protocol TaskRepository {
     func getAll() -> [Task]
 }
 
-extension TaskRepository {
+extension TaskRepositoryProtocol {
     func getNewId() -> Int {
         let newId = Int.random(in: 1...10000000000)
         return isIdExist(newId) ? getNewId() : newId

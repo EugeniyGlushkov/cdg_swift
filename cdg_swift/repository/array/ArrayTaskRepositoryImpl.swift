@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class ArrayTaskRepositoryImpl: TaskRepository {
+class ArrayTaskRepositoryImpl: TaskRepositoryProtocol {
     private init() {}
     
     private var repository: [Task] = []

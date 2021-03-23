@@ -9,7 +9,7 @@ class UserDefaultsKeys {
     static let DATA_TASK_KEY = "DataTask"
 }
 
-class UserDefaultsTaskRepository: TaskRepository {
+class UserDefaultsTaskRepository: TaskRepositoryProtocol {
     private init() {
     }
 
