@@ -21,8 +21,13 @@ protocol TaskRepositoryProtocol {
 
 extension TaskRepositoryProtocol {
     func getNewId() -> Int {
+        return 0
+        //getAll()
+    }
+
+    func getNewRandomId() -> Int {
         let newId = Int.random(in: 1...10000000000)
-        return isIdExist(newId) ? getNewId() : newId
+        return isIdExist(newId) ? getNewRandomId() : newId
     }
     
     private func isIdExist(_ id: Int) -> Bool {

@@ -45,7 +45,7 @@ class UserDefaultsTaskRepository: TaskRepositoryProtocol {
     }
 
     func add(text: String) {
-        let newDataTask = DataTask(id: getNewId(), text: text)
+        let newDataTask = DataTask(id: getNewRandomId(), text: text)
 
         tasks.append(newDataTask)
     }

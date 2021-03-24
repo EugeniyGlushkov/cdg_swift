@@ -22,7 +22,7 @@ class ArrayTaskRepositoryImpl: TaskRepositoryProtocol {
     
     func add(text: String) {
         let newTask = Task(context: helper.context)
-        newTask.id = Int64(getNewId())
+        newTask.id = Int64(getNewRandomId())
         newTask.text = text
         repository.append(newTask)
     }

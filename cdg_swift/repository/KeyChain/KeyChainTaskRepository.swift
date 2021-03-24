@@ -7,10 +7,9 @@ import Locksmith
 
 class KeyChainTaskRepository: TaskRepositoryProtocol {
     private init() {
-        do {
-            try Locksmith.saveData(data: [:], forUserAccount: Self.USER_ACCOUNT_NAME)
-        } catch {
-            print(Self.INITIAL_ERROR_MESSAGE)
+        guard let tasks = getData() else {
+            saveData(data: [:], errorMessage: Self.INITIAL_ERROR_MESSAGE)
+            return
         }
     }
 
@@ -36,7 +35,7 @@ class KeyChainTaskRepository: TaskRepositoryProtocol {
             return
         }
 
-        saveData(data: newTasks, errorMessage: Self.ADD_ERROR_MESSAGE)
+        updateData(data: newTasks, errorMessage: Self.ADD_ERROR_MESSAGE)
     }
 
     func remove(byId id: Int) {
@@ -97,13 +96,13 @@ class KeyChainTaskRepository: TaskRepositoryProtocol {
     }
 
     private func getTasksWithNewElement(newText: String) -> [String: Any]? {
-        let stringId = String(getNewId())
+        let stringId = String(getNewRandomId())
 
         guard var tasks = getData() else {
             return nil
         }
 
-        tasks[stringId] = newText
+        tasks[stringId] = (newText, Date())
         return tasks
     }
 
