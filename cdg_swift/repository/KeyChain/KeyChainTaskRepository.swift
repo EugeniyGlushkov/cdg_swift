@@ -93,16 +93,19 @@ class KeyChainTaskRepository: TaskRepositoryProtocol {
             task.text = value as? String
             return task
         }
+        .sorted{ t, t2 in
+            return t.id < t2.id
+        }
     }
 
     private func getTasksWithNewElement(newText: String) -> [String: Any]? {
-        let stringId = String(getNewRandomId())
+        let stringId = String(getNewId())
 
         guard var tasks = getData() else {
             return nil
         }
 
-        tasks[stringId] = (newText, Date())
+        tasks[stringId] = newText
         return tasks
     }
 

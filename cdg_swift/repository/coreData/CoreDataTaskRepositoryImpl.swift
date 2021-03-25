@@ -24,7 +24,7 @@ class CoreDataTaskRepositoryImpl: TaskRepositoryProtocol {
             return
         }
         
-        newTask.id = Int64(getNewId())
+        newTask.id = Int64(getNewRandomId())
         newTask.text = text
         saveContext()
     }
